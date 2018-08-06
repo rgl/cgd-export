@@ -1,0 +1,22 @@
+# see https://www.elastic.co/guide/en/elasticsearch/reference/6.3/docker.html
+# see https://www.elastic.co/guide/en/kibana/6.3/docker.html
+version: '3.3'
+services:
+  elasticsearch:
+    build: ./elasticsearch-oss
+    environment:
+      - cluster.name=cgd-export
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - 9200:9200
+    networks:
+      - cgd-export
+  kibana:
+    image: docker.elastic.co/kibana/kibana-oss:6.3.2
+    ports:
+      - 5601:5601
+    networks:
+      - cgd-export
+networks:
+  cgd-export:
